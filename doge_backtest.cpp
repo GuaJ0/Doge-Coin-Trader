@@ -21,6 +21,15 @@ struct EquityPoint {
     double buyhold;
 };
 
+// trim time from date (YYYY-MM-DD 00:00:00 UTC → YYYY-MM-DD)
+auto trim_time = [](string d) {
+    size_t pos = d.find(' ');
+    if (pos != string::npos) {
+        d = d.substr(0, pos);
+    }
+    return d;
+};
+
 // read doge_price csv file
 
 vector<Bar> load_csv(const string& filename) {
@@ -192,7 +201,7 @@ void write_equity_csv(const string& out_prefix,
     ofstream f(fname);
     f << "Date,Strategy,BH\n";
     for (const auto& e : eq) {
-        f << e.date << "," << fixed << setprecision(2)
+        f << trim_time(e.date) << "," << fixed << setprecision(2)  // ← CHANGED
           << e.strat << "," << e.buyhold << "\n";
     }
     cerr << "Wrote " << fname << "\n";
@@ -207,7 +216,7 @@ void write_json(const string& out_prefix,
     f << "  \"labels\": [";
     for (size_t i = 0; i < eq.size(); ++i) {
         if (i) f << ",";
-        f << "\"" << eq[i].date << "\"";
+        f << "\"" << trim_time(eq[i].date) << "\"";  // ← CHANGED
     }
     f << "],\n";
 
@@ -228,7 +237,8 @@ void write_json(const string& out_prefix,
     f << "}\n";
     cerr << "Wrote " << fname << "\n";
 }
-    
+
+
 // main!!
 
 int main(int argc, char** argv) {
