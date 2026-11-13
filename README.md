@@ -51,13 +51,13 @@ Outputs:
 
 ## Parameters
 
-Change these in `main()` / `backtest()`:
+Defaults are set in the `backtest()` function signature:
 
 ```cpp
-int    LOOKBACK      = 50;      // N-day high for entry
-double STOP_LOSS     = 0.30;    // 30% stop from entry price
-double START_CAPITAL = 10000.0; // starting capital in USD
-double fee_bps       = 10.0;    // trading cost per side, in basis points
+int    breakout_lookback = 50;      // N-day high for entry
+double stop_pct          = 0.30;    // 30% stop from entry price
+double start_capital     = 10000.0; // starting capital in USD
+double fee_bps           = 10.0;    // trading cost per side, in basis points
 ```
 
 ## Tech
